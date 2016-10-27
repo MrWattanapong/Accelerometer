@@ -47,27 +47,56 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         float accelationSquareRoot = (x * x + y * y + z * z)
                 / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
         long actualTime = System.currentTimeMillis();
-        if (accelationSquareRoot >= 2) //
-        {
-            if (actualTime - lastUpdate < 200) {
+        if (accelationSquareRoot >= 2){
+            if (actualTime - lastUpdate < 700) {
                 return;
             }
-
             lastUpdate = actualTime;
-            Toast.makeText(this, "Device was shuffled", Toast.LENGTH_SHORT).show();
-
             if (color) {
                 view.setBackgroundColor(Color.GREEN);
-
-            } else {
+            }
+        }
+        else if (accelationSquareRoot >= 8) {
+            if (actualTime - lastUpdate < 700) {
+                return;
+            }
+            lastUpdate = actualTime;
+            if (color) {
+                view.setBackgroundColor(Color.BLUE);
+            }
+        }
+        else if (accelationSquareRoot >= 16){
+            if (actualTime - lastUpdate < 700) {
+                return;
+            }
+            lastUpdate = actualTime;
+            if (color) {
                 view.setBackgroundColor(Color.RED);
             }
-
-            color = !color;
-
-        } else{
-            Toast.makeText(this, "Device was not shuffled", Toast.LENGTH_SHORT).show();
         }
+//        if (accelationSquareRoot >= 2)
+//        {
+//            if (actualTime - lastUpdate < 200) {
+//                return;
+//            }
+//
+//            lastUpdate = actualTime;
+//            Toast.makeText(this, "Device was shuffled", Toast.LENGTH_SHORT).show();
+//
+//            if (color) {
+//                view.setBackgroundColor(Color.GREEN);
+//
+//            } else {
+//                view.setBackgroundColor(Color.RED);
+//            }
+//
+//            color = !color;
+//
+//        }
+//        else{
+//            Toast.makeText(this, "Device was not shuffled", Toast.LENGTH_SHORT).show();
+//        }
+
     }
 
     @Override
