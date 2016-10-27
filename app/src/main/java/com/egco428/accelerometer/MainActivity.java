@@ -9,7 +9,10 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -47,52 +50,54 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         float accelationSquareRoot = (x * x + y * y + z * z)
                 / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
         long actualTime = System.currentTimeMillis();
-        if (accelationSquareRoot >= 2){
+
+
+        if (accelationSquareRoot >= 2 && accelationSquareRoot <= 4)
+        {
+            Random ran = new Random();
+            int num = ran.nextInt(100);
+            TextView number = (TextView)findViewById(R.id.number);
+            number.setText(String.valueOf(num));
+
             if (actualTime - lastUpdate < 700) {
                 return;
             }
+
             lastUpdate = actualTime;
+//            Toast.makeText(this, "Device was shuffled", Toast.LENGTH_SHORT).show();
+
             if (color) {
                 view.setBackgroundColor(Color.GREEN);
-            }
-        }
-        else if (accelationSquareRoot >= 8) {
-            if (actualTime - lastUpdate < 700) {
-                return;
-            }
-            lastUpdate = actualTime;
-            if (color) {
-                view.setBackgroundColor(Color.BLUE);
-            }
-        }
-        else if (accelationSquareRoot >= 16){
-            if (actualTime - lastUpdate < 700) {
-                return;
-            }
-            lastUpdate = actualTime;
-            if (color) {
+
+            } else {
                 view.setBackgroundColor(Color.RED);
             }
+
+            color = !color;
+
         }
-//        if (accelationSquareRoot >= 2)
-//        {
-//            if (actualTime - lastUpdate < 200) {
-//                return;
-//            }
-//
-//            lastUpdate = actualTime;
-//            Toast.makeText(this, "Device was shuffled", Toast.LENGTH_SHORT).show();
-//
-//            if (color) {
-//                view.setBackgroundColor(Color.GREEN);
-//
-//            } else {
-//                view.setBackgroundColor(Color.RED);
-//            }
-//
-//            color = !color;
-//
+//        else{
+//            Toast.makeText(this, "Device was not shuffled", Toast.LENGTH_SHORT).show();
 //        }
+        else if (accelationSquareRoot >= 5 && accelationSquareRoot <= 8)
+        {
+            if (actualTime - lastUpdate < 700) {
+                return;
+            }
+
+            lastUpdate = actualTime;
+//            Toast.makeText(this, "Device was shuffled", Toast.LENGTH_SHORT).show();
+
+            if (color) {
+                view.setBackgroundColor(Color.GREEN);
+
+            } else {
+                view.setBackgroundColor(Color.BLUE);
+            }
+
+            color = !color;
+
+        }
 //        else{
 //            Toast.makeText(this, "Device was not shuffled", Toast.LENGTH_SHORT).show();
 //        }
