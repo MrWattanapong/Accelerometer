@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        view = findViewById(R.id.textView);
+        view.setBackgroundColor(Color.GREEN);
+
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         lastUpdate = System.currentTimeMillis();
     }
@@ -65,5 +68,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else{
             Toast.makeText(this, "Device was not shuffled", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
     }
 }
